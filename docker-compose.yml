@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  mysql-master:
+    image: mysql:latest
+    container_name: mysql-master
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: master_root_password
+      MYSQL_DATABASE: learn_replica_db
+      MYSQL_USER: master_user
+      MYSQL_PASSWORD: master_password
+    volumes:
+      - mysql_master_data:/var/lib/mysql
+      - ./master_mysql/my.cnf:/etc/my.cnf
+    ports:
+      - "3306:3306"
+    networks:
+      - mysql_network
+
+  mysql-slave:
+    image: mysql:latest
+    container_name: mysql-slave
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: slave_root_password
+      MYSQL_DATABASE: learn_replica_db
+      MYSQL_USER: slave_user
+      MYSQL_PASSWORD: slave_password
+    volumes:
+      - mysql_slave_data:/var/lib/mysql
+      - ./slave_mysql/my.cnf:/etc/my.cnf
+    ports:
+      - "3307:3306"
+    networks:
+      - mysql_network
+
+volumes:
+  mysql_master_data:
+  mysql_slave_data:
+
+networks:
+  mysql_network:
