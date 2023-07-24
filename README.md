@@ -5,6 +5,10 @@ Resources
 - https://www.digitalocean.com/community/tutorials/how-to-set-up-replication-in-mysql
 - https://www.linkedin.com/pulse/simplified-guide-mysql-replication-docker-compose-rakesh-shekhawat/
 
+# Learnings
+1. Why would there be a lag between master & slave replication?  
+At the end of the day, the master records all WRITES into a log, which is then read by replica.
+IO, network etc are all factors that could influence this lag time.
 
 # How to run locally
 1. Manually create volumes that will be used in subsequent steps
